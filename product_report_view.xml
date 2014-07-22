@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_product_elote_graph">
+            <field name="name">product.elote.graph</field>
+            <field name="model">product.elote.report</field>
+            <field name="arch" type="xml">
+                <graph string="Product E-Lote" type="pivot">
+                    <field name="publishing_bs" type="row"/>
+                    <field name="ean13" type="row"/>
+                    <field name="ubs_code_no" type="row"/>
+                    <field name="ubs_code_suffix" type="row"/>
+                    <field name="language" type="row"/>
+                    <field name="version" type="row"/>
+                    <field name="categoria" type="row"/>
+                    <field name="subcategoria" type="row"/>
+                    <field name="bible_binding" type="row"/>
+                    <field name="bible_colour" type="row"/>
+                    <field name="bible_size" type="row"/>
+                    <field name="quantity" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_product_elote_tree">
+            <field name="name">product.elote.tree</field>
+            <field name="model">product.elote.report</field>
+            <field name="arch" type="xml">
+                <tree string="Product E-Lote">
+                    <field name="publishing_bs" />
+                    <field name="ean13" />
+                    <field name="ubs_code_no" />
+                    <field name="ubs_code_suffix" />
+                    <field name="language" />
+                    <field name="version" />
+                    <field name="categ_id" />
+                    <field name="categoria" />
+                    <field name="subcategoria" />
+                    <field name="bible_binding" />
+                    <field name="bible_colour" />
+                    <field name="bible_size" />
+		    <field name="carton_quantity" />
+		    <field name="carton_weight" />
+		    <field name="carton_width" />
+		    <field name="carton_length" />
+		    <field name="carton_heigth" />
+		    <field name="carton_volume" />
+		    <field name="exw_price" />
+		    <field name="service_fee" />
+		    <field name="developing_cost" />
+		    <field name="royalties" />
+		    <field name="default_code" />
+		    <field name="name" />
+		    <field name="product_new" />
+		    <field name="partner_id" />
+                </tree>
+            </field>
+        </record>
+
+
+
+    <record id="view_report_product_elote_filter" model="ir.ui.view">
+            <field name="name">product.elote.report.select</field>
+            <field name="model">product.elote.report</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <group expand="1" string="Group By...">
+                        <filter string="Publishing BS" icon="terp-partner" context="{'group_by':'publishing_bs'}" />
+                        <filter string="ISBN" icon="terp-partner" context="{'group_by':'ean13'}" />
+                        <filter string="UBS Code" icon="terp-partner" context="{'group_by':'ubs_code_no'}" />
+                        <filter string="UBS Code Suffix" icon="terp-partner" context="{'group_by':'ubs_code_suffix'}" />
+                        <filter string="Language" icon="terp-partner" context="{'group_by':'language'}" />
+                        <filter string="Version" icon="terp-partner" context="{'group_by':'version'}" />
+                        <filter string="Categoria" icon="terp-partner" context="{'group_by':'categoria'}" />
+                        <filter string="SubCategoria" icon="terp-partner" context="{'group_by':'subcategoria'}" />
+                        <filter string="Binding" icon="terp-partner" context="{'group_by':'bible_binding'}" />
+                        <filter string="Bible Colour" icon="terp-partner" context="{'group_by':'bible_colour'}" />
+                        <filter string="Bible Size" icon="terp-partner" context="{'group_by':'bible_size'}" />
+                        <filter string="Default Code" icon="terp-partner" context="{'group_by':'default_code'}" />
+                        <filter string="Name" icon="terp-partner" context="{'group_by':'name'}" />
+                        <filter string="Product New" icon="terp-partner" context="{'group_by':'product_new'}" />
+                        <filter string="Supplier" icon="terp-partner" context="{'group_by':'partner_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+<!-- Phone calls by user and section Action -->
+
+        <record id="action_report_product_weblot" model="ir.actions.act_window">
+            <field name="name">Products e-Lote</field>
+            <field name="res_model">product.elote.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <!--field name="context">{"search_default_Partner":1,"search_default_Product":1,'group_by_no_leaf':1,'group_by':[]}</field -->
+            <field name="context">{"search_default_Publishing_BS":1,'group_by':['publishing_bs']}</field>
+            <field name="search_view_id" ref="view_report_product_elote_filter"/>
+            <field name="view_id" ref="view_product_elote_graph"/>
+            <!-- field name="view_id" ref="view_report_purchase_order_weblot_tree"/ -->
+        </record>
+
+        <record id="action_grid_product_weblot" model="ir.actions.act_window">
+            <field name="name">Products e-Lote (Grid)</field>
+            <field name="res_model">product.elote.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--field name="context">{"search_default_Partner":1,"search_default_Product":1,'group_by_no_leaf':1,'group_by':[]}</field -->
+            <!-- field name="context">{"search_default_Publishing_BS":1,'group_by':['publishing_bs']}</field -->
+            <field name="context">{"search_default_Publishing_BS":1}</field>
+            <field name="search_view_id" ref="view_report_product_elote_filter"/>
+            <field name="view_id" ref="view_product_elote_tree"/>
+            <!-- field name="view_id" ref="view_report_purchase_order_weblot_tree"/ -->
+        </record>
+
+
+        <menuitem name="e-Lote Product Pivot"
+            groups="base.group_sale_salesman"
+            action="action_report_product_weblot"
+            id="menu_product_elote_pivot" parent="base.next_id_64" sequence="35"/>
+
+        <menuitem name="e-Lote Product Grid"
+            groups="base.group_sale_salesman"
+            action="action_grid_product_weblot"
+            id="menu_product_elote_grid" parent="base.next_id_64" sequence="45"/>
+
+    </data>
+</openerp>
